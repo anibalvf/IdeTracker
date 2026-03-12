@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IdeTracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="app-header">
+    <span class="app-logo">🏠</span>
+    <h1 class="app-title">IdeTracker</h1>
+  </header>
+
+  <!-- Vista: estamos en una página de propiedad -->
+  <section id="view-property" class="view hidden">
+    <div id="property-preview" class="property-preview"></div>
+    <button id="btn-save" class="btn btn-primary">Guardar vivienda</button>
+    <p id="save-status" class="status-msg"></p>
+  </section>
+
+  <!-- Vista: no estamos en una página de propiedad -->
+  <section id="view-no-property" class="view hidden">
+    <p class="hint">Navega a un anuncio del portal para guardar la vivienda.</p>
+  </section>
+
+  <!-- Vista: listado de propiedades guardadas -->
+  <section id="view-saved" class="view hidden">
+    <div class="section-header">
+      <h2 class="section-title">Guardadas (<span id="saved-count">0</span>)</h2>
+      <button id="btn-clear-all" class="btn btn-danger-sm">Borrar todo</button>
+    </div>
+    <ul id="saved-list" class="saved-list"></ul>
+  </section>
+
+  <script src="popup.js"></script>
+</body>
+</html>

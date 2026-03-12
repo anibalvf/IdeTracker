@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "IdeTracker",
+  "version": "0.1.0",
+  "description": "Guarda y monitoriza precios de viviendas en portales inmobiliarios",
+
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+
+  "host_permissions": [
+    "https://www.idealista.com/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["https://www.idealista.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "IdeTracker"
+  }
+}
