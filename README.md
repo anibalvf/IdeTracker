@@ -1,6 +1,6 @@
 # IdeTracker
 
-Chrome extension to track and monitor real estate listings on Idealista — save properties, record price history, and never lose track of a listing again.
+Chrome extension to track and monitor real estate listings on Idealista Save properties, record price history, and never lose track of a listing again.
 
 ---
 
