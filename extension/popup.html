@@ -29,8 +29,13 @@
   <section id="view-saved" class="view hidden">
     <div class="section-header">
       <h2 class="section-title">Guardadas (<span id="saved-count">0</span>)</h2>
-      <button id="btn-clear-all" class="btn btn-danger-sm">Borrar todo</button>
+      <div class="section-actions">
+        <button id="btn-export" class="btn btn-sm" title="Exportar a JSON">⬇ Exportar</button>
+        <button id="btn-import-trigger" class="btn btn-sm" title="Importar desde JSON">⬆ Importar</button>
+        <button id="btn-clear-all" class="btn btn-danger-sm">Borrar todo</button>
+      </div>
     </div>
+    <input type="file" id="btn-import" accept=".json" class="hidden" />
     <ul id="saved-list" class="saved-list"></ul>
   </section>
 

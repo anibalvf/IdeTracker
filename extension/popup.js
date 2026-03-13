@@ -307,6 +307,66 @@ async function init() {
     }
   });
 
+  // ─── Exportar ──────────────────────────────────────────────────────────────
+  document.getElementById("btn-export")?.addEventListener("click", async () => {
+    const props = await loadProperties();
+    if (!props.length) {
+      alert("No hay viviendas guardadas para exportar.");
+      return;
+    }
+    const json = JSON.stringify(props, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `idetracker-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // ─── Importar ──────────────────────────────────────────────────────────────
+  document.getElementById("btn-import-trigger")?.addEventListener("click", () => {
+    document.getElementById("btn-import")?.click();
+  });
+
+  document.getElementById("btn-import")?.addEventListener("change", async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      const imported = JSON.parse(text);
+
+      if (!Array.isArray(imported)) {
+        alert("Archivo no válido: debe ser un array de viviendas.");
+        return;
+      }
+
+      const existing = await loadProperties();
+      const existingUrls = new Set(existing.map((p) => p.url));
+
+      let added = 0;
+      let skipped = 0;
+
+      for (const p of imported) {
+        if (!p.url || !p.title) { skipped++; continue; }
+        if (existingUrls.has(p.url)) { skipped++; continue; }
+        existing.push(p);
+        existingUrls.add(p.url);
+        added++;
+      }
+
+      await saveProperties(existing);
+      renderSavedList(existing);
+      alert(`Importación completada: ${added} añadidas, ${skipped} omitidas (duplicadas o inválidas).`);
+    } catch {
+      alert("Error al leer el archivo. Asegúrate de que es un JSON exportado por IdeTracker.");
+    }
+
+    // Reset input para permitir reimportar el mismo archivo
+    e.target.value = "";
+  });
+
   // ─── Borrar todo ───────────────────────────────────────────────────────────
   document.getElementById("btn-clear-all")?.addEventListener("click", async () => {
     if (!confirm("¿Borrar todas las viviendas guardadas?")) return;
